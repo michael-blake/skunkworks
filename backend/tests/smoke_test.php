@@ -49,10 +49,28 @@ function http_get_text(string $url): string
     return $body;
 }
 
+function try_http_get_text(string $url): ?string
+{
+    $context = stream_context_create([
+        'http' => [
+            'method' => 'GET',
+            'ignore_errors' => true,
+            'timeout' => 1,
+        ],
+    ]);
+
+    $body = @file_get_contents($url, false, $context);
+    if ($body === false) {
+        return null;
+    }
+
+    return $body;
+}
+
 $root = dirname(__DIR__, 2);
 $publicDir = $root . '/backend/public';
 $host = '127.0.0.1';
-$port = 8055;
+$port = random_int(20000, 60000);
 
 $cmd = sprintf('php -S %s:%d -t %s', $host, $port, escapeshellarg($publicDir));
 
@@ -71,9 +89,9 @@ try {
     $started = false;
     $start = microtime(true);
 
-    while ((microtime(true) - $start) < 2.0) {
-        $health = @http_get_text("http://{$host}:{$port}/health");
-        if (str_starts_with($health, 'ok')) {
+    while ((microtime(true) - $start) < 5.0) {
+        $health = try_http_get_text("http://{$host}:{$port}/health");
+        if (is_string($health) && str_starts_with($health, 'ok')) {
             $started = true;
             break;
         }
