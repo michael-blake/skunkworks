@@ -30,7 +30,7 @@ if ($path === '/' || $path === '/health') {
 if ($path === '/api/hello') {
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode([
-        'message' => 'Hello from PHP',
+        'message' => 'Hello World! I\'m the Backend!',
     ], JSON_UNESCAPED_SLASHES);
     exit;
 }
