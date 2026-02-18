@@ -1,6 +1,6 @@
 services:
   web:
-    build: .
+    image: skunkworks:latest
     restart: unless-stopped
     env_file:
       - .env
