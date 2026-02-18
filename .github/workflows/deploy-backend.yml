@@ -52,4 +52,9 @@ jobs:
             --region "$AWS_REGION" \
             --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
-            --parameters commands="echo SSMreached > /tmp/ssm-reached.txt"
+            --parameters commands=[
+              "cd /home/ec2-user/skunkworks",
+              "aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 958587271363.dkr.ecr.us-east-2.amazonaws.com",
+              "docker compose -f docker-compose.ec2.yml pull",
+              "docker compose -f docker-compose.ec2.yml up -d"
+            ]
