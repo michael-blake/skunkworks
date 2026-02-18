@@ -53,4 +53,4 @@ jobs:
             --instance-ids "$INSTANCE_ID" \
             --comment "Deploy backend: $GITHUB_SHA" \
             --document-name "AWS-RunShellScript" \
-            --parameters commands="cd $APP_DIR && docker compose -f docker-compose.ec2.yml pull && docker compose -f docker-compose.ec2.yml up -d"
+            --parameters commands="cd /home/ec2-user/skunkworks && docker compose -f docker-compose.ec2.yml pull && docker compose -f docker-compose.ec2.yml up -d"
