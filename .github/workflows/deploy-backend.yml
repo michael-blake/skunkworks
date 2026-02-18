@@ -52,4 +52,4 @@ jobs:
             --region "$AWS_REGION" \
             --instance-ids "$INSTANCE_ID" \
             --document-name "AWS-RunShellScript" \
-            --parameters commands="echo 'SSM reached' > /tmp/ssm-reached.txt"
+            --parameters commands="echo SSMreached > /tmp/ssm-reached.txt"
