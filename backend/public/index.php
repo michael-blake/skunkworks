@@ -5,7 +5,14 @@ declare(strict_types=1);
 $path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
-header('Access-Control-Allow-Origin: http://localhost:5173');
+ $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+ $allowedOriginsEnv = getenv('ALLOWED_ORIGINS') ?: '';
+ $allowedOrigins = array_values(array_filter(array_map('trim', explode(',', $allowedOriginsEnv))));
+ $defaultDevOrigins = ['http://localhost:5173'];
+ $isAllowedOrigin = $origin !== '' && in_array($origin, array_merge($defaultDevOrigins, $allowedOrigins), true);
+ if ($isAllowedOrigin) {
+     header("Access-Control-Allow-Origin: {$origin}");
+ }
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 

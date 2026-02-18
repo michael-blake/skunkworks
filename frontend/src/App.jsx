@@ -7,9 +7,11 @@ export default function App() {
   useEffect(() => {
     let cancelled = false
 
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || ''
+
     async function load() {
       try {
-        const res = await fetch('/api/hello')
+        const res = await fetch(`${apiBaseUrl}/api/hello`)
         if (!res.ok) throw new Error(`Backend returned ${res.status}`)
         const data = await res.json()
         if (!cancelled) setBackendMessage(data.message ?? '')

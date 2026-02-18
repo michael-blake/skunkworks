@@ -63,3 +63,15 @@ From `frontend/`:
 npm install
 npm test
 ```
+
+## Deploy split (Amplify frontend + EC2 backend)
+
+If you host the frontend on Amplify (HTTPS) and the backend on EC2, set the frontend build env var:
+
+- `VITE_API_BASE_URL` (example: `https://api.example.com`)
+
+The backend CORS allow-list is configured with:
+
+- `ALLOWED_ORIGINS` (comma-separated origins)
+
+Note: if your Amplify site is served over HTTPS, your API must also be reachable over HTTPS. Browsers will block HTTPS pages from calling an HTTP API.
